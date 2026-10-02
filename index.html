@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#160b18">
+<title>Для Айпери ❤️</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700&display=swap');
+
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+    min-height:100vh;
+    color:#fff;
+    background:
+      radial-gradient(circle at 15% 10%, rgba(255,91,159,.18), transparent 28%),
+      radial-gradient(circle at 85% 30%, rgba(177,74,255,.12), transparent 30%),
+      linear-gradient(145deg,#08070d,#160b18 48%,#0b0710);
+    font-family:'Montserrat',sans-serif;
+    overflow-x:hidden;
+}
+body.locked{overflow:hidden}
+
+#stars{position:fixed;inset:0;pointer-events:none;z-index:0}
+.star{
+    position:absolute;width:2px;height:2px;background:#fff;border-radius:50%;
+    opacity:.65;animation:twinkle 2s infinite ease-in-out;
+}
+@keyframes twinkle{50%{opacity:.15;transform:scale(.5)}}
+
+.screen{
+    position:relative;z-index:2;min-height:100vh;
+    display:flex;align-items:center;justify-content:center;padding:28px 16px;
+}
+.card{
+    width:min(900px,100%);
+    padding:clamp(25px,6vw,60px);
+    border:1px solid rgba(255,255,255,.12);
+    background:rgba(18,10,20,.72);
+    backdrop-filter:blur(18px);
+    -webkit-backdrop-filter:blur(18px);
+    border-radius:30px;
+    box-shadow:0 25px 80px rgba(0,0,0,.45),0 0 50px rgba(255,72,145,.08);
+}
+.hidden{display:none!important}
+.center{text-align:center}
+
+.eyebrow{
+    color:#ff9fc5;text-transform:uppercase;letter-spacing:4px;
+    font-size:11px;margin-bottom:14px
+}
+h1,h2{
+    font-family:'Cormorant Garamond',serif;
+    font-weight:600;
+}
+h1{font-size:clamp(55px,12vw,105px);line-height:.9}
+h2{font-size:clamp(36px,7vw,60px);margin-bottom:15px}
+p{line-height:1.8;color:#e8dce6}
+.subtitle{max-width:650px;margin:20px auto;font-size:15px}
+
+.btn{
+    border:0;border-radius:999px;padding:14px 24px;
+    color:white;background:linear-gradient(135deg,#ff4f98,#a944cf);
+    font-weight:700;cursor:pointer;font-size:14px;
+    box-shadow:0 10px 30px rgba(255,65,143,.2);
+    transition:.25s transform,.25s box-shadow;
+}
+.btn:hover{transform:translateY(-3px);box-shadow:0 15px 35px rgba(255,65,143,.32)}
+.btn.secondary{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12)}
+.btn.dark{background:#241326}
+
+.hero-heart{
+    width:90px;height:90px;margin:0 auto 25px;
+    display:grid;place-items:center;border-radius:50%;
+    background:rgba(255,79,152,.09);
+    border:1px solid rgba(255,159,197,.22);
+    font-size:42px;animation:pulse 2s infinite;
+}
+@keyframes pulse{50%{transform:scale(1.08);box-shadow:0 0 45px rgba(255,79,152,.22)}}
+
+.scroll-note{margin-top:28px;font-size:11px;color:#9f8f9c;letter-spacing:2px}
+
+.photo-grid{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin:30px 0;
+}
+.photo{
+    height:330px;border-radius:22px;overflow:hidden;
+    border:1px solid rgba(255,255,255,.12);
+    background:#211522;
+}
+.photo img{width:100%;height:100%;object-fit:cover;display:block}
+.photo .placeholder{
+    height:100%;display:grid;place-items:center;text-align:center;padding:20px;
+    color:#a997a7;font-size:12px
+}
+
+.letter{
+    margin:28px auto 0;max-width:700px;padding:30px;
+    border-radius:24px;background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,255,255,.09);
+}
+.letter p{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.65;color:#f4e8ef}
+
+.timer{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:28px 0;
+}
+.timebox{
+    padding:18px 8px;border-radius:18px;background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.08)
+}
+.timebox b{display:block;font-size:28px;color:#ffb2cf}
+.timebox span{font-size:10px;color:#9f8f9c;text-transform:uppercase}
+
+.game{
+    max-width:650px;margin:25px auto;padding:28px;
+    border-radius:25px;background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08)
+}
+.game-question{font-size:20px;margin-bottom:20px}
+.answers{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.answer{
+    border:1px solid rgba(255,255,255,.12);background:#1b101e;color:#fff;
+    padding:15px;border-radius:15px;cursor:pointer;transition:.2s
+}
+.answer:hover{background:#29152b;transform:translateY(-2px)}
+.answer.correct{background:#174b35;border-color:#46d998}
+.answer.wrong{background:#5a2138;border-color:#ff709f}
+
+.result{margin-top:18px;color:#ffb4d1;min-height:25px}
+
+.secret{
+    max-width:600px;margin:25px auto;padding:25px;
+    background:rgba(255,255,255,.04);border-radius:25px
+}
+input{
+    width:100%;padding:14px 16px;border-radius:13px;
+    border:1px solid rgba(255,255,255,.13);outline:none;
+    background:#100b12;color:#fff;margin:12px 0
+}
+input:focus{border-color:#ff75ab}
+.error{color:#ff88ad;font-size:13px;min-height:20px}
+
+.final-wrap{text-align:center;position:relative;min-height:430px}
+.final-title{font-size:clamp(40px,9vw,72px)}
+.final-text{max-width:620px;margin:15px auto 35px}
+.choice-area{
+    height:130px;position:relative;display:flex;justify-content:center;
+    align-items:center;gap:14px
+}
+#noBtn{position:relative}
+.yes-message{
+    margin:25px auto 0;padding:25px;max-width:560px;
+    border-radius:24px;background:rgba(255,79,152,.09);
+    border:1px solid rgba(255,125,176,.2)
+}
+.yes-message h3{font-family:'Cormorant Garamond';font-size:38px;margin-bottom:10px}
+
+.heart{
+    position:fixed;bottom:-30px;font-size:20px;pointer-events:none;
+    z-index:10;animation:floatUp linear forwards;
+}
+@keyframes floatUp{
+    from{transform:translateY(0) rotate(0);opacity:0}
+    10%{opacity:.8}
+    to{transform:translateY(-110vh) rotate(25deg);opacity:0}
+}
+
+.music{
+    position:fixed;right:15px;top:15px;z-index:20;
+    width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.15);
+    background:rgba(20,10,22,.8);color:#fff;cursor:pointer;font-size:19px
+}
+
+#toast{
+    position:fixed;left:50%;bottom:25px;transform:translateX(-50%);
+    background:#211322;border:1px solid rgba(255,255,255,.1);
+    padding:12px 18px;border-radius:999px;font-size:12px;
+    opacity:0;pointer-events:none;transition:.3s;z-index:30
+}
+#toast.show{opacity:1}
+
+@media(max-width:650px){
+    .card{border-radius:22px;padding:27px 18px}
+    .photo-grid{grid-template-columns:1fr}
+    .photo{height:380px}
+    .timer{grid-template-columns:repeat(2,1fr)}
+    .answers{grid-template-columns:1fr}
+    .letter{padding:22px 17px}
+    .letter p{font-size:20px}
+    .choice-area{height:160px}
+}
+</style>
+</head>
+
+<body>
+<div id="stars"></div>
+
+<audio id="music" loop>
+    <!-- ВСТАВЬ СЮДА ССЫЛКУ НА РОМАНТИЧЕСКУЮ МУЗЫКУ -->
+    <source src="" type="audio/mpeg">
+</audio>
+<button class="music" id="musicBtn" title="Музыка">♫</button>
+
+<section class="screen" id="home">
+    <div class="card center">
+        <div class="hero-heart">♡</div>
+        <div class="eyebrow">маленький подарок для</div>
+        <h1>Айпери</h1>
+        <p class="subtitle">
+            Иногда человек появляется в твоей жизни совсем недавно,
+            но почему-то успевает стать особенным.
+        </p>
+        <button class="btn" onclick="goTo('about')">Открыть подарок ✨</button>
+        <div class="scroll-note">ЗДЕСЬ ЕСТЬ НЕСКОЛЬКО СЮРПРИЗОВ</div>
+    </div>
+</section>
+
+<section class="screen hidden" id="about">
+    <div class="card">
+        <div class="center">
+            <div class="eyebrow">немного о тебе</div>
+            <h2>Айпери ❤️</h2>
+            <p class="subtitle">
+                Мы познакомились в школе и знакомы пока совсем недолго —
+                почти месяц. Но даже за такое небольшое время можно
+                оставить в памяти много тёплых моментов.
+            </p>
+        </div>
+
+        <div class="photo-grid">
+            <div class="photo">
+                <img src="aiperi1.jpg" alt="Фото Айпери" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                <div class="placeholder" style="display:none">Здесь будет фото Айпери №1<br><br>Назови файл <b>aiperi1.jpg</b></div>
+            </div>
+            <div class="photo">
+                <img src="aiperi2.jpg" alt="Фото Айпери" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                <div class="placeholder" style="display:none">Здесь будет фото Айпери №2<br><br>Назови файл <b>aiperi2.jpg</b></div>
+            </div>
+            <div class="photo">
+                <img src="aiperi3.jpg" alt="Фото Айпери" onerror="this.style.display='none';this.nextElementSibling.style.display='grid'">
+                <div class="placeholder" style="display:none">Здесь будет фото Айпери №3<br><br>Назови файл <b>aiperi3.jpg</b></div>
+            </div>
+        </div>
+
+        <div class="center">
+            <button class="btn" onclick="goTo('letter')">Дальше 💌</button>
+        </div>
+    </div>
+</section>
+
+<section class="screen hidden" id="letter">
+    <div class="card">
+        <div class="center">
+            <div class="eyebrow">письмо</div>
+            <h2>Для тебя</h2>
+        </div>
+
+        <div class="letter">
+            <p>
+                Айпери, мы знакомы совсем недолго, почти месяц, но за это
+                время ты успела стать особенным человеком.<br><br>
+                Мне нравится наше общение, наши разговоры и те моменты,
+                которые появились за это время. Иногда не нужно много лет,
+                чтобы человек стал тебе дорог.<br><br>
+                Я хотел сохранить всё это в одном маленьком подарке —
+                только для тебя. Надеюсь, открывая этот сайт, ты улыбнёшься. ❤️
+            </p>
+        </div>
+
+        <div class="center" style="margin-top:25px">
+            <button class="btn" onclick="goTo('timer')">Посмотреть время ✨</button>
+        </div>
+    </div>
+</section>
+
+<section class="screen hidden" id="timer">
+    <div class="card center">
+        <div class="eyebrow">с момента знакомства</div>
+        <h2>Наш маленький отсчёт</h2>
+        <p>Знакомы уже:</p>
+
+        <div class="timer">
+            <div class="timebox"><b id="days">0</b><span>дней</span></div>
+            <div class="timebox"><b id="hours">0</b><span>часов</span></div>
+            <div class="timebox"><b id="minutes">0</b><span>минут</span></div>
+            <div class="timebox"><b id="seconds">0</b><span>секунд</span></div>
+        </div>
+
+        <p style="font-size:12px;color:#a999a7">
+            Дата отсчёта установлена примерно на начало сентября 2026.
+            При необходимости измени её в JavaScript внизу файла.
+        </p>
+
+        <button class="btn" style="margin-top:25px" onclick="goTo('game')">Мини-игра 🎮</button>
+    </div>
+</section>
+
+<section class="screen hidden" id="game">
+    <div class="card center">
+        <div class="eyebrow">маленькая игра</div>
+        <h2>Насколько ты меня знаешь? 💗</h2>
+        <p>Ответь на несколько лёгких вопросов и доберись до сюрприза.</p>
+
+        <div class="game">
+            <div id="questionNumber" style="font-size:11px;color:#a999a7;margin-bottom:10px"></div>
+            <div class="game-question" id="question"></div>
+            <div class="answers" id="answers"></div>
+            <div class="result" id="gameResult"></div>
+        </div>
+
+        <button class="btn hidden" id="gameNext" onclick="nextQuestion()">Следующий вопрос →</button>
+    </div>
+</section>
+
+<section class="screen hidden" id="secret">
+    <div class="card center">
+        <div class="eyebrow">маленький секрет</div>
+        <h2>Секретный раздел 🔐</h2>
+        <p>Здесь спрятан ещё один маленький сюрприз.</p>
+
+        <div class="secret">
+            <input id="password" type="password" placeholder="Введи пароль">
+            <button class="btn" onclick="checkPassword()">Открыть</button>
+            <div class="error" id="passError"></div>
+        </div>
+
+        <div id="secretContent" class="hidden">
+            <div class="letter">
+                <p>
+                    Если ты дошла сюда — значит, любопытство победило 😄<br><br>
+                    Просто помни: этот сайт появился потому, что хотелось
+                    подарить тебе немного хорошего настроения. ✨
+                </p>
+            </div>
+            <button class="btn" style="margin-top:20px" onclick="goTo('final')">Последний сюрприз ❤️</button>
+        </div>
+    </div>
+</section>
+
+<section class="screen hidden" id="final">
+    <div class="card final-wrap">
+        <div class="eyebrow">самое главное</div>
+        <h2 class="final-title">Айпери, будешь моей девушкой? ❤️</h2>
+        <p class="final-text">
+            Я долго думал, как сказать это красиво, и решил оставить
+            ответ за тобой. Что скажешь?
+        </p>
+
+        <div class="choice-area" id="choiceArea">
+            <button class="btn" onclick="sayYes()">Да ❤️</button>
+            <button class="btn secondary" id="noBtn" onclick="noClicked()">Нет</button>
+        </div>
+
+        <div id="yesMessage" class="yes-message hidden">
+            <h3>Спасибо ❤️</h3>
+            <p>
+                Тогда пусть этот маленький сайт станет одним из наших
+                первых красивых воспоминаний. ✨
+            </p>
+        </div>
+    </div>
+</section>
+
+<div id="toast"></div>
+
+<script>
+/* =========================================================
+   НАСТРОЙКИ — МОЖНО МЕНЯТЬ ЗДЕСЬ
+========================================================= */
+
+// Пароль секретного раздела:
+const SECRET_PASSWORD = "aiperi";
+
+// Дата начала знакомства.
+// Поставь точную дату, если знаешь её.
+// Формат: ГОД-МЕСЯЦ-ДЕНЬ
+const START_DATE = new Date("2026-09-05T18:00:00");
+
+// Сюда можно добавить прямую ссылку на mp3.
+// Если музыка находится рядом с index.html,
+// например music.mp3, напиши: "music.mp3"
+const MUSIC_FILE = "";
+
+
+/* =========================================================
+   ПЕРЕКЛЮЧЕНИЕ ЭКРАНОВ
+========================================================= */
+
+function goTo(id){
+    document.querySelectorAll(".screen").forEach(s => s.classList.add("hidden"));
+    const target = document.getElementById(id);
+    if(target){
+        target.classList.remove("hidden");
+        window.scrollTo({top:0, behavior:"smooth"});
+    }
+}
+
+
+/* =========================================================
+   ЗВЁЗДЫ
+========================================================= */
+
+const stars = document.getElementById("stars");
+
+for(let i=0;i<90;i++){
+    const s=document.createElement("div");
+    s.className="star";
+    s.style.left=Math.random()*100+"%";
+    s.style.top=Math.random()*100+"%";
+    s.style.animationDelay=(Math.random()*3)+"s";
+    stars.appendChild(s);
+}
+
+
+/* =========================================================
+   ПАДАЮЩИЕ / ЛЕТЯЩИЕ СЕРДЕЧКИ
+========================================================= */
+
+function createHeart(){
+    const heart=document.createElement("div");
+    heart.className="heart";
+    heart.textContent=["♥","♡","❤","✦"][Math.floor(Math.random()*4)];
+    heart.style.left=Math.random()*100+"vw";
+    heart.style.fontSize=(12+Math.random()*20)+"px";
+    heart.style.animationDuration=(5+Math.random()*5)+"s";
+    document.body.appendChild(heart);
+
+    setTimeout(()=>heart.remove(),10000);
+}
+setInterval(createHeart,900);
+
+
+/* =========================================================
+   МУЗЫКА
+========================================================= */
+
+const music=document.getElementById("music");
+const musicBtn=document.getElementById("musicBtn");
+
+if(MUSIC_FILE){
+    music.querySelector("source").src=MUSIC_FILE;
+    music.load();
+}
+
+musicBtn.addEventListener("click",()=>{
+    if(!MUSIC_FILE){
+        showToast("Добавь mp3 в настройке MUSIC_FILE 🎵");
+        return;
+    }
+
+    if(music.paused){
+        music.play().then(()=>{
+            musicBtn.textContent="❚❚";
+        }).catch(()=>{
+            showToast("Нажми ещё раз, чтобы включить музыку");
+        });
+    }else{
+        music.pause();
+        musicBtn.textContent="♫";
+    }
+});
+
+
+/* =========================================================
+   ТАЙМЕР
+========================================================= */
+
+function updateTimer(){
+    let diff=Date.now()-START_DATE.getTime();
+
+    if(diff<0) diff=0;
+
+    const totalSeconds=Math.floor(diff/1000);
+    const days=Math.floor(totalSeconds/86400);
+    const hours=Math.floor((totalSeconds%86400)/3600);
+    const minutes=Math.floor((totalSeconds%3600)/60);
+    const seconds=totalSeconds%60;
+
+    document.getElementById("days").textContent=days;
+    document.getElementById("hours").textContent=String(hours).padStart(2,"0");
+    document.getElementById("minutes").textContent=String(minutes).padStart(2,"0");
+    document.getElementById("seconds").textContent=String(seconds).padStart(2,"0");
+}
+updateTimer();
+setInterval(updateTimer,1000);
+
+
+/* =========================================================
+   МИНИ-ИГРА
+========================================================= */
+
+const questions=[
+    {
+        q:"Где мы познакомились?",
+        a:["В школе","В интернете","На улице","На тренировке"],
+        correct:0
+    },
+    {
+        q:"Сколько примерно мы знакомы?",
+        a:["Почти месяц","Несколько лет","Один день","Полгода"],
+        correct:0
+    },
+    {
+        q:"Что сейчас происходит?",
+        a:["Ты проходишь маленький сюрприз","Ты сдаёшь экзамен","Ты играешь в Kahoot","Ты смотришь фильм"],
+        correct:0
+    },
+    {
+        q:"Что находится в конце этого сайта?",
+        a:["Особенное признание","Домашнее задание","Расписание","Реклама"],
+        correct:0
+    }
+];
+
+let currentQuestion=0;
+let gameScore=0;
+let answered=false;
+
+function loadQuestion(){
+    answered=false;
+
+    const q=questions[currentQuestion];
+
+    document.getElementById("questionNumber").textContent=
+        `ВОПРОС ${currentQuestion+1} ИЗ ${questions.length}`;
+
+    document.getElementById("question").textContent=q.q;
+    document.getElementById("gameResult").textContent="";
+    document.getElementById("gameNext").classList.add("hidden");
+
+    const answers=document.getElementById("answers");
+    answers.innerHTML="";
+
+    q.a.forEach((answer,index)=>{
+        const btn=document.createElement("button");
+        btn.className="answer";
+        btn.textContent=answer;
+
+        btn.onclick=()=>{
+            if(answered)return;
+            answered=true;
+
+            if(index===q.correct){
+                btn.classList.add("correct");
+                gameScore++;
+                document.getElementById("gameResult").textContent="Правильно ❤️";
+            }else{
+                btn.classList.add("wrong");
+                answers.children[q.correct].classList.add("correct");
+                document.getElementById("gameResult").textContent="Почти 😄 Правильный ответ подсвечен.";
+            }
+
+            document.getElementById("gameNext").classList.remove("hidden");
+        };
+
+        answers.appendChild(btn);
+    });
+}
+
+function nextQuestion(){
+    currentQuestion++;
+
+    if(currentQuestion<questions.length){
+        loadQuestion();
+    }else{
+        document.querySelector(".game").innerHTML=`
+            <div style="font-size:42px;margin-bottom:15px">✨</div>
+            <div style="font-family:'Cormorant Garamond';font-size:38px">
+                Готово!
+            </div>
+            <p style="margin-top:10px">
+                Твой результат: <b>${gameScore}/${questions.length}</b>
+            </p>
+        `;
+
+        document.getElementById("gameNext").textContent="К сюрпризу 🔐";
+        document.getElementById("gameNext").classList.remove("hidden");
+        document.getElementById("gameNext").onclick=()=>{
+            goTo("secret");
+        };
+    }
+}
+
+loadQuestion();
+
+
+/* =========================================================
+   СЕКРЕТНЫЙ ПАРОЛЬ
+========================================================= */
+
+function checkPassword(){
+    const value=document.getElementById("password").value.trim();
+    const error=document.getElementById("passError");
+
+    if(value===SECRET_PASSWORD){
+        error.textContent="";
+        document.getElementById("secretContent").classList.remove("hidden");
+        showToast("Секрет открыт 🔓");
+    }else{
+        error.textContent="Пароль неправильный 💗";
+    }
+}
+
+document.getElementById("password").addEventListener("keydown",(e)=>{
+    if(e.key==="Enter") checkPassword();
+});
+
+
+/* =========================================================
+   ФИНАЛЬНОЕ ПРИЗНАНИЕ
+========================================================= */
+
+function sayYes(){
+    document.getElementById("yesMessage").classList.remove("hidden");
+    document.getElementById("choiceArea").style.display="none";
+
+    for(let i=0;i<25;i++){
+        setTimeout(createHeart,i*70);
+    }
+}
+
+function noClicked(){
+    const btn=document.getElementById("noBtn");
+    const area=document.getElementById("choiceArea");
+
+    // На телефоне кнопка тоже остаётся в пределах области.
+    const maxX=Math.max(0,area.clientWidth/2-90);
+    const maxY=55;
+
+    const x=(Math.random()*2-1)*maxX;
+    const y=(Math.random()*2-1)*maxY;
+
+    btn.style.transform=`translate(${x}px,${y}px)`;
+    showToast("Попробуй нажать ещё раз 😄");
+}
+
+
+/* =========================================================
+   УВЕДОМЛЕНИЯ
+========================================================= */
+
+let toastTimer;
+
+function showToast(text){
+    const toast=document.getElementById("toast");
+    toast.textContent=text;
+    toast.classList.add("show");
+
+    clearTimeout(toastTimer);
+    toastTimer=setTimeout(()=>{
+        toast.classList.remove("show");
+    },2200);
+}
+</script>
+</body>
+</html>
